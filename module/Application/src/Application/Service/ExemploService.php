@@ -1,7 +1,8 @@
-<?php 
+<?php
+
 namespace Application\Service;
 
-class ExemploService
-{
-    
-}
+
+class ExemploService {
+
+} 

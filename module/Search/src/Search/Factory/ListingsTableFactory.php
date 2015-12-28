@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Search\Factory;
 
 use Search\Model\ListingsTable;

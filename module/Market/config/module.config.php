@@ -1,127 +1,125 @@
-<?php 
+<?php
 return array(
     'controllers' => array(
         'invokables' => array(
-            'market-index-controller' => 'Market\Controller\IndexController',
-            'market-view-controller' => 'Market\Controller\ViewController'
         ),
         'factories' => array(
             'market-post-controller' => 'Market\Factory\PostControllerFactory',
+            'market-index-controller' => 'Market\Factory\IndexControllerFactory',
+            'market-view-controller' => 'Market\Factory\ViewControllerFactory',
+            'market-delete-controller' => 'Market\Factory\DeleteControllerFactory',
         ),
         'aliases' => array(
-            'alt' => 'market-view-controller'
-        )
+            'alt' => 'market-view-controller',
+        ),
     ),
     'service_manager' => array(
+        'services' => array(
+            'date-expires' => array(5, 10, 15, 20, 25),
+        ),
         'factories' => array(
-            'market-post-form' => 'Market\Factory\PostFormFactory',     
-            'market-post-filter' => 'Market\Factory\PostFilterFactory'
+            'market-post-form' => 'Market\Factory\PostFormFactory',
+            'market-post-filter' => 'Market\Factory\PostFormFilterFactory',
+            'listings-table' => 'Market\Factory\ListingsTableFactory',
+            'area-codes-table' => 'Market\Factory\WorldCityAreaCodesTableFactory',
+            'market-delete-form' => 'Market\Factory\DeleteFormFactory',
+            'market-delete-filter' => 'Market\Factory\DeleteFormFilterFactory',
         )
     ),
     'router' => array(
         'routes' => array(
             'home' => array(
-                'type' => 'Literal',
+                'type'    => 'Literal',
                 'options' => array(
-                    'route' => '/',
+                    'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'market-index-controller',
-                        'action' => 'index'
+                        'controller'    => 'market-index-controller',
+                        'action'        => 'index'
                     )
                 )
-            ), // fecha home
+            ),
             'market' => array(
-                'type' => 'Literal',
+                'type'    => 'Literal',
                 'options' => array(
-                    'route' => '/market',
+                    'route'    => '/market',
                     'defaults' => array(
-                        'controller' => 'market-index-controller',
-                        'action' => 'index'
+                        'controller'    => 'market-index-controller',
+                        'action'        => 'index'
                     )
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
-                        'type' => 'Segment',
-                        'options' => array(
-                            'route' => '/[:action[/:param]]',
-                        )
-                    ),
-                    'view' => array(
+                    'slash' => array(
                         'type' => 'Literal',
                         'options' => array(
-                            'route' => '/view',
+                            'route' => '/',
+                            'defaults' => array(
+                                'controller' => 'market-index-controller',
+                                'action' => 'index',
+                            )
+                        ),
+                    ),
+                    'view' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/view[/]',
                             'defaults' => array(
                                 'controller' => 'market-view-controller',
-                                'action' => 'index'
+                                'action' => 'index',
                             )
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
-                            'default' => array(
-                                'type' => 'Segment',
-                                'options' => array(
-                                    'route' => '/[:action[/:param]]',
-                                )
-                            ),
                             'main' => array(
                                 'type' => 'Segment',
                                 'options' => array(
-                                    'route' => '/main[/:category]',
+                                    'route' => 'main[/][:category]',
                                     'defaults' => array(
-                                        'action' => 'index'
-                                    )
-                                )
-                            ),
-                            'index' => array(
-                                'type' => 'Segment',
-                                'options' => array(
-                                    'route' => '/index[/:category]',
-                                    'defaults' => array(
-                                        'action' => 'index'
+                                        'action'        => 'index'
                                     )
                                 )
                             ),
                             'item' => array(
                                 'type' => 'Segment',
                                 'options' => array(
-                                    'route' => '/item[/:itemId]',
+                                    'route' => 'item[/][:itemId]',
                                     'defaults' => array(
-                                        'action' => 'item'
+                                        'action'    => 'item'
                                     ),
                                     'constraints' => array(
                                         'itemId' => '[0-9]*'
                                     )
                                 )
                             )
-                        ) // fecha market view child
-                    ), // fecha market view
+                        )
+                    ),
                     'post' => array(
-                        'type' => 'Literal',
+                        'type'    => 'Segment',
                         'options' => array(
-                            'route' => '/post',
+                            'route'    => '/post[/]',
                             'defaults' => array(
-                                'controller' => 'market-post-controller',
-                                'action' => 'index'
-                            )
-                        ),
-                        'may_terminate' => true,
-                        'child_routes' => array(
-                            'default' => array(
-                                'type' => 'Segment',
-                                'options' => array(
-                                    'route' => '/[:action[/:param]]',
-                                )
+                                'controller'    => 'market-post-controller',
+                                'action'        => 'index'
                             )
                         )
-                    ) // fecha market post
-                ) // fecha child market
-            ) // fecha market
-        ) // fecha routes
-    ), // fecha router
+                    ),
+                    'delete' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/delete[/]',
+                            'defaults' => array(
+                                'controller'    => 'market-delete-controller',
+                                'action'        => 'index'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'Market' => __DIR__ . '/../view'
-        )
-    )
+            'Market' => __DIR__ . '/../view',
+        ),
+    ),
 );

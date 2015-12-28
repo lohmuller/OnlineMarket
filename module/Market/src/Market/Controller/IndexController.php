@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -14,20 +14,28 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    use ListingsTableTrait;
+
     public function indexAction()
     {
-        $messages = array("Welcome to the Online Market");
-        if($this->flashmessenger()->hasMessages()) {
-            $messages = $this->flashmessenger()->getMessages();
+
+        $return = array('title' => 'Bem Vindo à Online Market!');
+
+        $flashMessenger = $this->flashMessenger();
+
+        if($flashMessenger->hasMessages()) {
+            $return['messages'] = $flashMessenger->getMessages();
         }
-//         return array('messages'=>$messages);
-        return new ViewModel(array('messages'=>$messages));
+
+        $return['listing'] = $this->listingsTable->getMostRecentListing();
+
+        return $return;
     }
 
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route
         // are working when you browse to /module-specific-root/skeleton/foo
-        return array();
+        return new ViewModel();
     }
 }

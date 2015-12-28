@@ -12,4 +12,16 @@
  */
 
 return array(
+    'db' => array(
+        'driver' => 'pdo',
+        'dsn' => 'mysql:dbname=onlinemarket.db;hostname=localhost',
+        'username' => 'root',
+        'password' => '',
+        'driver_options' => array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'general-adapter' => 'Zend\Db\Adapter\AdapterServiceFactory'
+        )
+    )
 );

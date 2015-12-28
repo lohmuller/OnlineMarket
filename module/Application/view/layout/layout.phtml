@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle('Online '. $this->translate('Market'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -12,20 +12,22 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        ->prependStylesheet($this->basePath('css/style.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('css/index.css')) ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery.min.js'))
+            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/html5shiv.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
     <body>
+
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -34,46 +36,37 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('Skeleton Application') ?></a>
-                </div>   
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('Online Market') ?></a>
+                </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li<?php echo ($this->url() == '/') ? ' class="active"' : ''; ?>><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                        <li<?php echo (($this->url() <> '/market/post') and substr_count($this->url(), 'market')) ? ' class="active"' : ''; ?>><a href="<?php echo $this->url('market') ?>"><?php echo $this->translate('Market') ?></a></li>
-                        <li<?php echo substr_count($this->url(), 'client') ? ' class="active"' : ''; ?>><a href="<?php echo $this->url('client') ?>"><?php echo $this->translate('Client') ?></a></li>
-                        <li<?php echo substr_count($this->url(), 'search') ? ' class="active"' : ''; ?>><a href="<?php echo $this->url('search-test') ?>"><?php echo $this->translate('Search') ?></a></li>
-                        <li<?php echo ($this->url() == '/market/post') ? ' class="active"' : ''; ?>><a href="<?php echo $this->url('market/post') ?>"><?php echo $this->translate('New Post') ?></a></li>
+                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                        <li><a href="<?php echo $this->url('market/post') ?>"><?php echo $this->translate('Post Form') ?></a></li>
+                        <li><a href="<?php echo $this->url('search-home') ?>"><?php echo $this->translate('Busca Post') ?></a></li>
+                        <li><a href="<?php echo $this->url('market/delete') ?>"><?php echo $this->translate('Delete Form') ?></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
+
         <div class="container">
-            <div class="col-lg-2"><!-- M3Ex1 < ? php //echo $this->categories; ? >  --> 
-                <h3>Categories</h3>
-                <?php echo $this->leftLinks($this->categories,$this->basePath().'/market/view/main/'); ?>
-                <!--  
-                Ao criar o Helper leftLinks e registra-lo no view_helpers do Application/module.config.php
-                o helper leftLinks substituiu o helper htmllist
-                
-                $this->htmllist($this->categories)
-                o helper htmllist substitui o código abaixo           
-                <ul>
-                < ? php foreach ($this->categories as $category): ? >
-                    <li>< ? php echo $category; ? ></li>
-                < ? php endforeach; ? >
-                </ul>
-                -->
+
+            <div class="col-lg-2">
+                <h4>Categorias</h4>
+                <?php echo $this->leftLinks($this->categories, $this->basePath('market/view/main')); ?>
             </div>
-            <div class="col-lg-8">
+
+            <div class="col-lg-10">
                 <?php echo $this->content; ?>
             </div>
-        </div> <!-- /container -->
-        <div class="container">
-            <hr>
-            <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
-        </div> <!-- /container -->
+        </div>
+
+        <hr />
+
+        <footer class="text-center">
+            <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+        </footer>
+         <!-- /container -->
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

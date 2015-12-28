@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Search\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;

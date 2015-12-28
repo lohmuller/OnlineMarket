@@ -5,8 +5,7 @@ return array(
         'Application',
         'Market',
         'Search',
-        'Client',
-        'ZendDeveloperTools'
+        'ZendDeveloperTools',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

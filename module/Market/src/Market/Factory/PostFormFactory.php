@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Market\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
@@ -7,13 +7,23 @@ use Market\Form\PostForm;
 
 class PostFormFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $sm)
+    public function createService(ServiceLocatorInterface $serviceManager)
     {
-        $form = new PostForm();
-        $form->setCategories($sm->get('categories'));
-        $form->buildForm();
-        $form->setInputFilter($sm->get('market-post-filter'));
-        
-        return $form;
+        $categories = $serviceManager->get('categories');
+        $dateExpires = $serviceManager->get('date-expires');
+        $cities = $serviceManager->get('area-codes-table');
+
+        $postFormFilter = $serviceManager->get('market-post-filter');
+
+        $postForm = new PostForm();
+        $postForm->setCategories($categories);
+        $postForm->setDateExpires($dateExpires);
+        $postForm->setCities($cities->getCodesForFrom());
+
+        $postForm->buildForm();
+        $postForm->setInputFilter($postFormFilter);
+
+        return $postForm;
     }
+
 }
