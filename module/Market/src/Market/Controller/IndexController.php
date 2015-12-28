@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -16,21 +16,18 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $return = array('title' => 'Bem Vindo à Online Market!');
-
-        $flashMessenger = $this->flashMessenger();
-
-        if($flashMessenger->hasMessages()) {
-            $return['messages'] = $flashMessenger->getMessages();
+        $messages = array("Welcome to the Online Market");
+        if($this->flashmessenger()->hasMessages()) {
+            $messages = $this->flashmessenger()->getMessages();
         }
-
-        return $return;
+//         return array('messages'=>$messages);
+        return new ViewModel(array('messages'=>$messages));
     }
 
     public function fooAction()
     {
         // This shows the :controller and :action parameters in default route
         // are working when you browse to /module-specific-root/skeleton/foo
-        return new ViewModel();
+        return array();
     }
 }

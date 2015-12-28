@@ -1,10 +1,6 @@
-<h1><?php echo $this->title; ?></h1>
-
-<?php if(isset($this->messages)): ?>
-    <div class="alert alert-warning alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <?php echo $this->htmlList($this->messages, false, array('class' => 'text-warning')); ?>
-    </div>
+<h1>Welcome to Index Market!</h1>
+<?php if(isset($this->messages) && count($this->messages)): ?>
+<span style="color:red;">
+    <?php echo $this->htmllist($this->messages); ?>
+</span>    
 <?php endif; ?>

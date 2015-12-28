@@ -1,4 +1,4 @@
-<?php
+<?php 
 return function ($class) {
     static $map;
     if (!$map) {

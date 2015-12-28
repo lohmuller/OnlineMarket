@@ -1,4 +1,4 @@
-<?php
+<?php 
 namespace Search\Form;
 
 use Zend\InputFilter\Input;

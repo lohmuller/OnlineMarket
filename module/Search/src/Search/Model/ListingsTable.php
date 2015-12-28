@@ -1,4 +1,4 @@
-<?php
+<?php 
 namespace Search\Model;
 use Zend\Db\Sql\Where;
 use Zend\Db\Sql\Expression;

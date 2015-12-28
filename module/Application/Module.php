@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -11,46 +11,50 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\ModuleManager\ModuleManager;
+use Zend\Navigation\Page\Mvc;
 
 class Module
 {
-    public function init(ModuleManager $mm)
-    {
-        //print_r($mm->getLoadedModules());
-    }
-
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-
-        // listens "dispatch" = MvcEvent::EVENT_DISPATCH
-        // context this
-        // handler (callback) onDispatch()
-        // priority 100
-        // obs.: executa metodo onDispatch da classe definida, no caso $this
-        // trigger está sendo executada em AbstractController
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'), 100);
+        
+        // escutar / listens: "dispatch" event
+        // context: $this
+        // handler / callback / metodo: onDispatch()
+        // priority / prioridade: 100
+        // funciona igual: $eventManager->attach('dispatch' , array($this,'onDispatch') , 100);
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH , array($this,'onDispatch') , 100);
     }
 
     public function onDispatch(MvcEvent $e)
     {
+        $sm = $e->getApplication()->getServiceManager();
+        $categories = $sm->get("categories");
+//      $e->getViewModel()->setVariable("categories", "CATEGORY_LIST");
         $vm = $e->getViewModel();
-        $categoryList = $e->getApplication()->getServiceManager()->get('categories');
+//      $vm->setVariable("categories", "CATEGORY_LIST");
+        $vm->setVariable("categories", $categories);
         
-        $vm->setVariable('categories', $categoryList);
     }
-
-    public function getServiceConfig()
-    {
-        return array(
-            'invokables' => array(
-                'SampleService' => 'Application\Service\SampleService'
-            )
-        );
-    }
+    
+//     public function getServiceConfig(){
+//         //opção de uso do module.config.php adicionando invokableas ao array service_manager
+//         //@todo mais utilizado para função anônima --  
+//         return array(
+//             'invokables' => array(
+//                 //'ExemploService' => 'Application\Service\ExemploService'
+//                 //recomenda-se nomear os types do service_manager com o nome nomo do caminho completo
+//                 //    para não gerar confusão, pois ExemploService pode estar em vários caminhos,
+//                 //    mas dentro de um caminho existe apenas um ExemploService
+//                 //   Importante: renomear nas chamadas
+//                 'Application\Service\ExemploService' => 'Application\Service\ExemploService'
+                
+//             )            
+//         );
+//     }
 
     public function getConfig()
     {

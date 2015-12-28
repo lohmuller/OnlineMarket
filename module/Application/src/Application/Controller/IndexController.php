@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -16,23 +16,30 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        /* ideal usar o caminho inteiro */
-        $exemploService = $this->getServiceLocator()->get("Application\Service\ExemploService");
-
-        /* exemplo de chamada pelo Module.php -> getServiceConfig */
-        $sampleService = $this->getServiceLocator()->get("SampleService");
-
-        //print_r($exemploService);
-        //print_r($sampleService);
-        //die;
-        //print_r(get_class_methods($e = $this->getEvent()));
         return new ViewModel();
     }
-
-    public function exemploAction()
+    
+    public function exemploaAction()
     {
-        $nome = 'Zend Framework 2';
-
-        return new ViewModel(array('xpto' => $nome));
+        $nome = "Zend Framework 2 (exemplo a)";
+        $exemploService = $this->getServiceLocator()->get("Application\Service\ExemploService");
+        //         print_r($exemploService);//die;
+        return new ViewModel(array('nome'=>$nome));
+    }
+    
+    public function exemplobAction()
+    {
+        // alternativa
+        // $arr_view = array('nome' => "Zend Framework 2 (exemplo b)");
+        $arr_view = array();
+        $arr_view['nome'] = "Zend Framework 2 (exemplo b)";
+        return new ViewModel($arr_view);
+    }
+    
+    public function exemplocAction()
+    {
+        $obj_view = new ViewModel();
+        $obj_view->nome = "Zend Framework 2 (exemplo c)";
+        return $obj_view;
     }
 }

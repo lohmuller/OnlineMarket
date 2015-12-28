@@ -1,4 +1,4 @@
-<?php
+<?php 
 namespace Search\Filter;
 
 use Zend\Filter\FilterInterface;
