@@ -2,17 +2,39 @@
 
 namespace Market\Controller;
 
+
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController {
+/**
+ * Class IndexController
+ */
+class IndexController extends AbstractActionController
+{
+    /**
+     * index
+     *
+     * @return array|ViewModel
+     */
+    public function indexAction()
+    {
+        $messages = array();
 
-    public function indexAction(){
-        return new ViewModel();
+        if($this->flashMessenger()->hasMessages()) {
+            $messages = $this->flashMessenger()->getMessages();
+        }
+        return new ViewModel([
+            'messages' => $messages,
+        ]);
     }
 
-    public function fooAction(){
-        return new ViewModel();
+    /**
+     * foo
+     *
+     * @return array
+     */
+    public function fooAction()
+    {
+        return array();
     }
-
 } 

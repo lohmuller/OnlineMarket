@@ -55,9 +55,22 @@ return array(
     'service_manager' => array(
         'services' => array(
             'categories' => array(
-                'barter', 'health','beauty', 'household', 'clothing', 
-                'phones', 'computer', 'property', 'entertainment', 'sporting', 
-                'free', 'tools', 'garden', 'transportation', 'general', 'wanted'
+                'barter',
+                'beauty',
+                'clothing',
+                'computer',
+                'entertainment',
+                'free',
+                'garden',
+                'general',
+                'health',
+                'household',
+                'phones',
+                'property',
+                'sporting',
+                'tools',
+                'transportation',
+                'wanted'
             )
         ),
         'abstract_factories' => array(

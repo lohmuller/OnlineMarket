@@ -20,16 +20,24 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH,array($this, 'onDispatch'),100);
+        // escutar / listens: "dispatch" event // escuta: o evento "MvcEvent::EVENT_DISPATCH"
+        // Contexto: objeto atual $this
+        // Handler / callback / method: onDispatch()
+        // Prioridade: 100
+        // $eventManager->attach('dispath', [$this, 'onDispatch'], 100);
+        // $eventManager->attach($e::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
+
     }
-	
-    public function onDispatch(MvcEvent $e){
-        $sm = $e->getApplication()->getServiceManager();
-        $categories = $sm->get('categories');
-        
-        $vm = $e->getViewModel();
-        $vm->setVariable('categories', $categories);
-        
+
+    public function onDispatch(MvcEvent $e)
+    {
+        $viewModel = $e->getViewModel();
+
+        $categories = $e->getApplication()->getServiceManager()->get('categories');
+
+        $viewModel->setVariable("categories", $categories);
+
     }
 
     public function getConfig()

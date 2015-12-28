@@ -1,10 +1,9 @@
 <?php
-
 return array(
     'router' => array(
         'routes' => array(
             'market' => array(
-                'type' => 'Literal',
+                'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route'    => '/market',
                     'defaults' => array(
@@ -30,10 +29,16 @@ return array(
             ),
         ),
     ),
-
     'controllers' => array(
         'invokables' => array(
-            'market-index-controller' => 'Market\Controller\IndexController'
+            'market-index-controller' => 'Market\Controller\IndexController',
+            'market-view-controller'  => 'Market\Controller\ViewController'
+        ),
+        'factories' => array(
+            'market-post-controller' => 'Market\Factory\PostControllerFactory',
+        ),
+        'aliases' => array(
+                'alt' => 'market-view-controller',
         ),
     ),
 
