@@ -16,7 +16,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $return = array();
+        $return = array('title' => 'Bem Vindo à Online Market!');
 
         $flashMessenger = $this->flashMessenger();
 
@@ -24,7 +24,7 @@ class IndexController extends AbstractActionController
             $return['messages'] = $flashMessenger->getMessages();
         }
 
-        return new ViewModel($return);
+        return $return;
     }
 
     public function fooAction()
