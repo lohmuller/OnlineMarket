@@ -11,33 +11,45 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\ModuleManager;
 
 class Module
 {
+    public function init(ModuleManager $mm)
+    {
+        //print_r($mm->getLoadedModules());
+    }
+
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
-        // escutar / listens: "dispatch" event // escuta: o evento "MvcEvent::EVENT_DISPATCH"
-        // Contexto: objeto atual $this
-        // Handler / callback / method: onDispatch()
-        // Prioridade: 100
-        // $eventManager->attach('dispath', [$this, 'onDispatch'], 100);
-        // $eventManager->attach($e::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
-
+        // listens "dispatch" = MvcEvent::EVENT_DISPATCH
+        // context this
+        // handler (callback) onDispatch()
+        // priority 100
+        // obs.: executa metodo onDispatch da classe definida, no caso $this
+        // trigger está sendo executada em AbstractController
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'onDispatch'), 100);
     }
 
     public function onDispatch(MvcEvent $e)
     {
-        $viewModel = $e->getViewModel();
+        $vm = $e->getViewModel();
+        $categoryList = $e->getApplication()->getServiceManager()->get('categories');
+        
+        $vm->setVariable('categories', $categoryList);
+    }
 
-        $categories = $e->getApplication()->getServiceManager()->get('categories');
-
-        $viewModel->setVariable("categories", $categories);
-
+    public function getServiceConfig()
+    {
+        return array(
+            'invokables' => array(
+                'SampleService' => 'Application\Service\SampleService'
+            )
+        );
     }
 
     public function getConfig()

@@ -1,16 +1,9 @@
-
-<h1>Olá Index Market</h1>
-
-<?php
-if(isset($this->messages) && count($this->messages)):
-?>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="alert alert-danger" >
-            <?php echo $this->htmllist($this->messages);?>
-        </div>
+<h1>Index Market</h1>
+<?php if(isset($this->messages)): ?>
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <?php echo $this->htmlList($this->messages, false, array('class' => 'text-warning')); ?>
     </div>
-</div>
-<?php
-endif;
-?>
+<?php endif; ?>
